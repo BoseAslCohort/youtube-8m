@@ -289,10 +289,13 @@ class IsaacNet(models.BaseModel):
     layers_per_block = (depth - (total_blocks + 1)) // total_blocks
     first_output_features = growth_rate * 2
 
+
+    adj_input = tf.expand_dims(model_input, 0)
+
     # first - initial 3 x 3 conv to first_output_features
     with tf.variable_scope("Initial_convolution"):
         output = self.conv2d(
-            model_input,
+            adj_input,
             out_features=first_output_features,
             kernel_size=3)
 
