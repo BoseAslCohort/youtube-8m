@@ -121,7 +121,8 @@ class IsaacNet(models.BaseModel):
         output = self.conv2d(
             output, out_features=inter_features, kernel_size=1,
             padding='VALID')
-        output = self.dropout(output)
+        # TEMP TEMP TEMP
+        #output = self.dropout(output)
     return output
 
   def weight_variable_msra(self, shape, name):
@@ -184,7 +185,8 @@ class IsaacNet(models.BaseModel):
           output = self.conv2d(
               output, out_features=out_features, kernel_size=kernel_size)
           # dropout(in case of training and in case it is no 1.0)
-          output = self.dropout(output)
+          # todo TEMP TEMP TEMP
+          #output = self.dropout(output)
       return output
 
   def transition_layer(self, _input):
