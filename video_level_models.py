@@ -100,6 +100,13 @@ class MoeModel(models.BaseModel):
         gating_distribution[:, :num_mixtures] * expert_distribution, 1)
     final_probabilities = tf.reshape(final_probabilities_by_class_and_batch,
                                      [-1, vocab_size])
+
+    print
+    "HI2!"
+    print
+    final_probabilities.shape
+    final_probabilities = tf.Print(final_probabilities, [final_probabilities])
+
     return {"predictions": final_probabilities}
 
 
