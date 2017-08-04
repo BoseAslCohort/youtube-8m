@@ -283,8 +283,8 @@ class IsaacNet(models.BaseModel):
     self.reduction = 1.0
     self.bc_mode = True
 
-    depth = 3
-    total_blocks = 3
+    depth = 1
+    total_blocks = 1
     growth_rate = 100
 
     self.n_classes = vocab_size
@@ -320,7 +320,7 @@ class IsaacNet(models.BaseModel):
 
     final_probabilities = tf.nn.softmax(logits)
 
-    final_probabilities = tf.Print(final_probabilities, [final_probabilities])
+    #final_probabilities = tf.Print(final_probabilities, [final_probabilities])
 
 
     return {"predictions": final_probabilities}
