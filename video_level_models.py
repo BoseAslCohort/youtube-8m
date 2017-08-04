@@ -320,7 +320,9 @@ class IsaacNet(models.BaseModel):
     #final_probabilities = tf.reshape(logits, [-1, vocab_size])
     final_probabilities = logits
 
-    final_probabilities = tf.Print(final_probabilities, [logits])
+    print "HI!"
+    print final_probabilities.shape
+    final_probabilities = tf.Print(final_probabilities, [final_probabilities])
 
 
     return {"predictions": final_probabilities}
