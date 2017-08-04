@@ -15,7 +15,7 @@ BATCH_SIZE=1024
 # (One Time) Create a storage bucket to store training logs and checkpoints.
 gsutil mb -l $REGION $BUCKET_NAME
 
-TRAIN_JOB_NAME=isaacthurzTRAIN
+TRAIN_JOB_NAME=I_6
 
 gcloud --verbosity=debug ml-engine jobs submit training $TRAIN_JOB_NAME \
 --package-path=youtube-8m --module-name=youtube-8m.train \
@@ -32,6 +32,7 @@ gcloud --verbosity=debug ml-engine jobs submit training $TRAIN_JOB_NAME \
 --num_epochs=10
 --start_new_model = True
 
+exit 1
 
 VAL_JOB_NAME=isaacthurzEVAL
 
