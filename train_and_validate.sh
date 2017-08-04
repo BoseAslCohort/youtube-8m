@@ -29,7 +29,7 @@ gcloud --verbosity=debug ml-engine jobs submit training $TRAIN_JOB_NAME \
 --feature_names=$FEATURE_NAMES \
 --feature_sizes=$FEATURE_SIZES \
 --batch_size=$BATCH_SIZE \
---num_epochs=10
+--num_epochs=10 \
 --start_new_model = True
 
 exit 1

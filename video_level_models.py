@@ -295,7 +295,7 @@ class IsaacNet(models.BaseModel):
 
     #adj_input = tf.expand_dims(tf.expand_dims(model_input, 1), 1)
     #adj_input = tf.expand_dims(tf.reshape(model_input, [32, 32]), 1)
-    adj_input = tf.reshape(model_input, [-1, 32, 32, 1])
+    adj_input = tf.reshape(model_input, [-1, 32, 36, 1])
 
     # first - initial 3 x 3 conv to first_output_features
     with tf.variable_scope("Initial_convolution"):
