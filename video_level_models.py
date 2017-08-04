@@ -103,8 +103,7 @@ class MoeModel(models.BaseModel):
 
     print
     "HI2!"
-    print
-    final_probabilities.shape
+    print final_probabilities.shape
     final_probabilities = tf.Print(final_probabilities, [final_probabilities])
 
     return {"predictions": final_probabilities}
