@@ -1,21 +1,21 @@
 #!/bin/bash
 if [ $# -eq 0 ]; then
-    BUCKET_NAME=gs://isaacthursday2
+    BUCKET_NAME=gs://isaacthurz3
 else
     BUCKET_NAME=$1
 fi
 
 REGION=us-east1
-MODEL="MoeModel"
+MODEL="IsaacNet"
 MOE_NUM_MIXTURES=2
-FEATURE_NAMES="mean_rgb,mean_audio"
-FEATURE_SIZES="1024,128"
-BATCH_SIZE=2048
+FEATURE_NAMES="mean_rgb"
+FEATURE_SIZES="1024"
+BATCH_SIZE=1024
 
 # (One Time) Create a storage bucket to store training logs and checkpoints.
 gsutil mb -l $REGION $BUCKET_NAME
 
-TRAIN_JOB_NAME=TRAIN_isaactestthursday
+TRAIN_JOB_NAME=isaacthurzTRAIN
 
 gcloud --verbosity=debug ml-engine jobs submit training $TRAIN_JOB_NAME \
 --package-path=youtube-8m --module-name=youtube-8m.train \
@@ -33,7 +33,7 @@ gcloud --verbosity=debug ml-engine jobs submit training $TRAIN_JOB_NAME \
 --start_new_model = True
 
 
-VAL_JOB_NAME=EVAL_isaactestthursday
+VAL_JOB_NAME=isaacthurzEVAL
 
 gcloud --verbosity=debug ml-engine jobs submit training $VAL_JOB_NAME \
 --package-path=youtube-8m --module-name=youtube-8m.eval \
