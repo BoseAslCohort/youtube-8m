@@ -166,8 +166,7 @@ class IsaacNet(models.BaseModel):
 
   def batch_norm(self, _input):
     output = tf.contrib.layers.batch_norm(
-        # TODO !!!
-        _input, scale=True, is_training=False,
+        _input, scale=True, is_training=self.is_training,
         updates_collections=None)
     return output
 
@@ -280,13 +279,13 @@ class IsaacNet(models.BaseModel):
     """
 
     self.is_training = True
-    self.keep_prob = 1.0
+    self.keep_prob = 0.5
     self.reduction = 1.0
     self.bc_mode = True
 
-    depth = 4
-    total_blocks = 4
-    growth_rate = 200
+    depth = 100
+    total_blocks = 3
+    growth_rate = 30
 
     self.n_classes = vocab_size
 
