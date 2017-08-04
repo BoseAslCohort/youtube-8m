@@ -279,9 +279,9 @@ class IsaacNet(models.BaseModel):
     """
 
     self.is_training = True
-    self.keep_prob = 0.5
+    self.keep_prob = 0.7
     self.reduction = 1.0
-    self.bc_mode = True
+    self.bc_mode = False
 
     depth = 40
     total_blocks = 3
