@@ -101,11 +101,6 @@ class MoeModel(models.BaseModel):
     final_probabilities = tf.reshape(final_probabilities_by_class_and_batch,
                                      [-1, vocab_size])
 
-    print
-    "HI2!"
-    print final_probabilities.shape
-    final_probabilities = tf.Print(final_probabilities, [final_probabilities])
-
     return {"predictions": final_probabilities}
 
 
@@ -321,13 +316,8 @@ class IsaacNet(models.BaseModel):
     with tf.variable_scope("Transition_to_classes"):
         logits = self.trainsition_layer_to_classes(output)
 
+    final_probabilities = tf.nn.softmax(logits)
 
-    # INTEGRATION
-    #final_probabilities = tf.reshape(logits, [-1, vocab_size])
-    final_probabilities = logits
-
-    print "HI!"
-    print final_probabilities.shape
     final_probabilities = tf.Print(final_probabilities, [final_probabilities])
 
 
