@@ -283,9 +283,9 @@ class IsaacNet(models.BaseModel):
     self.reduction = 1.0
     self.bc_mode = False
 
-    depth = 5
-    total_blocks = 10
-    growth_rate = 20
+    depth = 3
+    total_blocks = 8
+    growth_rate = 10
 
     self.n_classes = vocab_size
 
