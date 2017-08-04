@@ -283,9 +283,9 @@ class IsaacNet(models.BaseModel):
     self.reduction = 1.0
     self.bc_mode = True
 
-    depth = 8
+    depth = 3
     total_blocks = 3
-    growth_rate = 20
+    growth_rate = 100
 
     self.n_classes = vocab_size
 
@@ -312,6 +312,8 @@ class IsaacNet(models.BaseModel):
         if block != total_blocks - 1:
             with tf.variable_scope("Transition_after_block_%d" % block):
                 output = self.transition_layer(output)
+
+    output = tf.nn.dropout(output, .8)
 
     with tf.variable_scope("Transition_to_classes"):
         logits = self.trainsition_layer_to_classes(output)
