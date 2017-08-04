@@ -316,7 +316,7 @@ class IsaacNet(models.BaseModel):
         logits = self.trainsition_layer_to_classes(output)
 
 
-    tf.print(logits, [logits])
+    tf.Print(logits, [logits])
 
     # INTEGRATION
     #final_probabilities = tf.reshape(logits, [-1, vocab_size])
