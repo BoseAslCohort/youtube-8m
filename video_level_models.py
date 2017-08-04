@@ -315,11 +315,9 @@ class IsaacNet(models.BaseModel):
     with tf.variable_scope("Transition_to_classes"):
         logits = self.trainsition_layer_to_classes(output)
 
-
-        print "LOGITS:", logits.shape
-    print "LOGITS2:", logits.shape
-
     # INTEGRATION
-    final_probabilities = tf.reshape(logits,
-                                     [-1, vocab_size])
+    #final_probabilities = tf.reshape(logits, [-1, vocab_size])
+    final_probabilities = logits
+
+
     return {"predictions": final_probabilities}
