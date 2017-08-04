@@ -8,8 +8,8 @@ fi
 REGION=us-east1
 MODEL="IsaacNet"
 MOE_NUM_MIXTURES=2
-FEATURE_NAMES="mean_rgb"
-FEATURE_SIZES="1024"
+FEATURE_NAMES="mean_rgb, mean_audio"
+FEATURE_SIZES="1024, 128"
 BATCH_SIZE=1024
 
 # (One Time) Create a storage bucket to store training logs and checkpoints.

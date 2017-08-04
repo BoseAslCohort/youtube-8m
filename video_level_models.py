@@ -283,7 +283,7 @@ class IsaacNet(models.BaseModel):
     self.reduction = 1.0
     self.bc_mode = False
 
-    depth = 40
+    depth = 6
     total_blocks = 3
     growth_rate = 12
 
@@ -313,14 +313,14 @@ class IsaacNet(models.BaseModel):
             with tf.variable_scope("Transition_after_block_%d" % block):
                 output = self.transition_layer(output)
 
-    output = tf.nn.dropout(output, .8)
+    output = tf.nn.dropout(output, self.keep_prob)
 
     with tf.variable_scope("Transition_to_classes"):
         logits = self.trainsition_layer_to_classes(output)
 
     final_probabilities = tf.nn.softmax(logits)
 
-    final_probabilities = tf.Print(final_probabilities, [final_probabilities])
+    #final_probabilities = tf.Print(final_probabilities, [final_probabilities])
 
 
     return {"predictions": final_probabilities}
