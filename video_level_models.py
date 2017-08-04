@@ -282,7 +282,7 @@ class IsaacNet(models.BaseModel):
     self.reduction = 1.0
     self.bc_mode = True
 
-    depth = 40
+    depth = 8
     total_blocks = 3
     growth_rate = 20
 
