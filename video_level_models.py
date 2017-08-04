@@ -166,7 +166,8 @@ class IsaacNet(models.BaseModel):
 
   def batch_norm(self, _input):
     output = tf.contrib.layers.batch_norm(
-        _input, scale=True, is_training=self.is_training,
+        # TODO !!!
+        _input, scale=True, is_training=False,
         updates_collections=None)
     return output
 
