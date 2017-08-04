@@ -285,7 +285,7 @@ class IsaacNet(models.BaseModel):
 
     depth = 60
     total_blocks = 3
-    growth_rate = 10
+    growth_rate = 20
 
     self.n_classes = vocab_size
 
