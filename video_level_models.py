@@ -279,13 +279,13 @@ class IsaacNet(models.BaseModel):
     """
 
     self.is_training = True
-    self.keep_prob = .8
+    self.keep_prob = 1.0
     self.reduction = 1.0
     self.bc_mode = True
 
-    depth = 20
-    total_blocks = 3
-    growth_rate = 5
+    depth = 1
+    total_blocks = 1
+    growth_rate = 600
 
     self.n_classes = vocab_size
 
