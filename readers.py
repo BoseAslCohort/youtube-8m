@@ -107,6 +107,8 @@ class YT8MAggregatedFeatureReader(BaseReader):
     return self.prepare_serialized_examples(serialized_examples)
 
   def prepare_serialized_examples(self, serialized_examples):
+
+    #import ipdb; ipdb.set_trace()
     # set the mapping from the fields to data types in the proto
     num_features = len(self.feature_names)
     assert num_features > 0, "self.feature_names is empty!"
@@ -222,7 +224,7 @@ class YT8MFrameFeatureReader(BaseReader):
             feature_name : tf.FixedLenSequenceFeature([], dtype=tf.string)
             for feature_name in self.feature_names
         })
-
+    import ipdb; ipdb.set_trace()
     # read ground truth labels
     labels = (tf.cast(
         tf.sparse_to_dense(contexts["labels"].values, (self.num_classes,), 1,
@@ -267,4 +269,3 @@ class YT8MFrameFeatureReader(BaseReader):
     batch_frames = tf.expand_dims(num_frames, 0)
 
     return batch_video_ids, batch_video_matrix, batch_labels, batch_frames
-

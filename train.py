@@ -214,8 +214,9 @@ def build_graph(reader,
     num_readers: How many threads to use for I/O operations.
     num_epochs: How many passes to make over the data. 'None' means an
                 unlimited number of passes.
+    with tf.device("/job:ps/task:0"):
   """
-
+ 
   global_step = tf.Variable(0, trainable=False, name="global_step")
 
   local_device_protos = device_lib.list_local_devices()
@@ -433,17 +434,16 @@ class Trainer(object):
               ("%.2f" % hit_at_one) + " PERR: " + ("%.2f" % perr) +
               " GAP: " + ("%.2f" % gap))
 
-            sv.summary_writer.add_summary(
-                utils.MakeSummary("model/Training_Hit@1", hit_at_one),
-                global_step_val)
-            sv.summary_writer.add_summary(
-                utils.MakeSummary("model/Training_Perr", perr), global_step_val)
-            sv.summary_writer.add_summary(
-                utils.MakeSummary("model/Training_GAP", gap), global_step_val)
-            sv.summary_writer.add_summary(
-                utils.MakeSummary("global_step/Examples/Second",
-                                  examples_per_second), global_step_val)
-            sv.summary_writer.flush()
+            info_dict = {"hit_at_one": hit_at_one,
+                         "perr": perr,
+                         "gap": gap,
+                         "loss": loss_val,
+                         "examples_per_second": examples_per_second,
+                         }
+
+            utils.AddGlobalStepSummary(sv.summary_writer,
+                                       global_step_val,
+                                       info_dict)
 
             # Exporting the model every x steps
             time_to_export = ((self.last_model_export_step == 0) or
@@ -533,7 +533,7 @@ class Trainer(object):
   def recover_model(self, meta_filename):
     logging.info("%s: Restoring from meta graph file %s",
                  task_as_string(self.task), meta_filename)
-    return tf.train.import_meta_graph(meta_filename)
+    return tf.train.import_meta_graph(meta_filename,clear_devices = True)
 
   def build_model(self, model, reader):
     """Find the model and build the graph."""
@@ -559,6 +559,7 @@ class Trainer(object):
 
 
 def get_reader():
+
   # Convert feature_names and feature_sizes to lists of values.
   feature_names, feature_sizes = utils.GetListOfFeatureNamesAndSizes(
       FLAGS.feature_names, FLAGS.feature_sizes)

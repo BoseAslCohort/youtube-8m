@@ -13,6 +13,7 @@
 # limitations under the License.
 """Binary for evaluating Tensorflow models on the YouTube-8M dataset."""
 
+import os
 import time
 
 import eval_util
@@ -66,6 +67,7 @@ if __name__ == "__main__":
                        "How many threads to use for reading input files.")
   flags.DEFINE_boolean("run_once", False, "Whether to run eval only once.")
   flags.DEFINE_integer("top_k", 20, "How many predictions to output per video.")
+  #flags.DEFINE_integer('wait_time_sec',30,'Seconds to wait before starting eval')
 
 
 def find_class_by_name(name, modules):
@@ -82,7 +84,7 @@ def get_input_evaluation_tensors(reader,
 
   Args:
     reader: A class which parses the training data.
-    data_pattern: A 'glob' style path to the data files.
+    data_pattern: A 'glob' styxle path to the data files.
     batch_size: How many examples to process at a time.
     num_readers: How many I/O threads to use.
 
@@ -188,6 +190,7 @@ def evaluation_loop(video_id_batch, prediction_batch, label_batch, loss,
     The global_step used in the latest model.
   """
 
+  #time.sleep(FLAGS.wait_time_sec)
   global_step_val = -1
   with tf.Session() as sess:
     latest_checkpoint = tf.train.latest_checkpoint(FLAGS.train_dir)
@@ -236,11 +239,10 @@ def evaluation_loop(video_id_batch, prediction_batch, label_batch, loss,
                                                      labels_val, loss_val)
         iteration_info_dict["examples_per_second"] = example_per_second
 
-        iterinfo = utils.AddGlobalStepSummary(
-            summary_writer,
-            global_step_val,
-            iteration_info_dict,
-            summary_scope="Eval")
+        iterinfo = utils.AddGlobalStepSummary(summary_writer,
+                                              global_step_val,
+                                              iteration_info_dict,
+                                              )
         logging.info("examples_processed: %d | %s", examples_processed,
                      iterinfo)
 
@@ -308,7 +310,8 @@ def evaluate():
 
     saver = tf.train.Saver(tf.global_variables())
     summary_writer = tf.summary.FileWriter(
-        FLAGS.train_dir, graph=tf.get_default_graph())
+                    os.path.join(FLAGS.train_dir, 'eval'),
+                    graph=tf.get_default_graph())
 
     evl_metrics = eval_util.EvaluationMetrics(reader.num_classes, FLAGS.top_k)
 
@@ -330,4 +333,3 @@ def main(unused_argv):
 
 if __name__ == "__main__":
   app.run()
-

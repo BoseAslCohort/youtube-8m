@@ -66,6 +66,10 @@ def AddGlobalStepSummary(summary_writer,
   this_hit_at_one = global_step_info_dict["hit_at_one"]
   this_perr = global_step_info_dict["perr"]
   this_loss = global_step_info_dict["loss"]
+  if "gap" in global_step_info_dict:
+      gap = global_step_info_dict["gap"]
+  else:
+      gap = None
   examples_per_second = global_step_info_dict.get("examples_per_second", -1)
 
   summary_writer.add_summary(
@@ -74,6 +78,10 @@ def AddGlobalStepSummary(summary_writer,
   summary_writer.add_summary(
       MakeSummary("GlobalStep/" + summary_scope + "_Perr", this_perr),
       global_step_val)
+  if gap is not None:
+    summary_writer.add_summary(
+        MakeSummary("GlobalStep/" + summary_scope + "_GAP", gap),
+        global_step_val)
   summary_writer.add_summary(
       MakeSummary("GlobalStep/" + summary_scope + "_Loss", this_loss),
       global_step_val)
@@ -126,10 +134,10 @@ def AddEpochSummary(summary_writer,
       global_step_val)
   summary_writer.add_summary(
       MakeSummary("Epoch/" + summary_scope + "_MAP", mean_ap),
-          global_step_val)
+      global_step_val)
   summary_writer.add_summary(
       MakeSummary("Epoch/" + summary_scope + "_GAP", gap),
-          global_step_val)
+      global_step_val)
   summary_writer.flush()
 
   info = ("epoch/eval number {0} | Avg_Hit@1: {1:.3f} | Avg_PERR: {2:.3f} "
@@ -196,8 +204,8 @@ def combine_gradients(tower_grads):
   """
   filtered_grads = [[x for x in grad_list if x[0] is not None] for grad_list in tower_grads]
   final_grads = []
-  for i in xrange(len(filtered_grads[0])):
-    grads = [filtered_grads[t][i] for t in xrange(len(filtered_grads))]
+  for i in range(len(filtered_grads[0])):
+    grads = [filtered_grads[t][i] for t in range(len(filtered_grads))]
     grad = tf.stack([x[0] for x in grads], 0)
     grad = tf.reduce_sum(grad, 0)
     final_grads.append((grad, filtered_grads[0][i][1],))

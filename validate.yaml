@@ -1,4 +1,4 @@
 trainingInput:
   scaleTier: CUSTOM
-  masterType: standard
+  masterType: complex_model_m
   runtimeVersion: "1.0"
